@@ -3,7 +3,7 @@ import React from 'react'
 
 const BookItem = ({ book }: { book: BookData }) => {
   return (
-    <div key={book.id} className='w-[180px] text-center'>
+    <div className='w-full text-center flex flex-col justify-center'>
       <div className='text-sm'>{book?.title}</div>
       {book.thumbnail && (
         <div className='flex justify-center my-4'>

@@ -3,7 +3,7 @@
 import { ApiBookData } from '@/type'
 import ModalContainer from './ModalContainer'
 import { useEffect, useState } from 'react'
-import { addBook } from '@/firebase'
+import addBookAction from '@/app/actions'
 
 interface Props {
   onClose: () => void
@@ -41,7 +41,7 @@ const BookFormModal = ({ onClose, selectedBook }: Props) => {
       quantity: quantity,
     }
     try {
-      const result = await addBook(book)
+      const result = await addBookAction(book)
 
       if (result.success) {
         alert('책이 등록되었습니다.')
