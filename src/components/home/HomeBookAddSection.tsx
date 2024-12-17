@@ -31,7 +31,7 @@ const HomeBookAddSection = () => {
       {isSearchModalOpen && (
         <AddBookModal onClose={closeSearchModal} handleSaleButton={handleSaleButton} />
       )}
-      {isFormModalOpen && <BookFormModal onclose={closeFormModal} selectedBook={selectedBook} />}
+      {isFormModalOpen && <BookFormModal onClose={closeFormModal} selectedBook={selectedBook} />}
     </div>
   )
 }
