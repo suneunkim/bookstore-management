@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
-import { addDoc, collection, getFirestore } from 'firebase/firestore'
+import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore'
 import { BookData } from './type'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -19,6 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
+// 책 DB 등록, 조회, 수정, 삭제
 export const addBook = async (book: any) => {
   try {
     await addDoc(collection(db, 'books'), book)
@@ -27,4 +28,17 @@ export const addBook = async (book: any) => {
     console.error(error)
     return { success: false }
   }
+}
+
+export const getBooks = async (): Promise<BookData[]> => {
+  const querySnapshot = await getDocs(collection(db, 'books'))
+
+  return querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    quantity: doc.data().quantity,
+    authors: doc.data().authors || [],
+    contents: doc.data().contents || '',
+    title: doc.data().title || '',
+    thumbnail: doc.data().thumbnail || '',
+  }))
 }

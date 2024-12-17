@@ -1,12 +1,13 @@
 'use client'
 
-import { BookData } from '@/type'
+import { ApiBookData } from '@/type'
 import ModalContainer from './ModalContainer'
 import { useEffect, useState } from 'react'
 import { addBook } from '@/firebase'
+
 interface Props {
   onClose: () => void
-  selectedBook: BookData | null
+  selectedBook: ApiBookData | null
 }
 
 const BookFormModal = ({ onClose, selectedBook }: Props) => {
@@ -32,7 +33,7 @@ const BookFormModal = ({ onClose, selectedBook }: Props) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!selectedBook) return
-    const book: BookData & { quantity: number } = {
+    const book: ApiBookData & { quantity: number } = {
       title: selectedBook.title,
       authors: authors,
       contents: description,

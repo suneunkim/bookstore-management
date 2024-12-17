@@ -1,6 +1,7 @@
 import { BookData } from '@/type'
 import { useEffect, useState } from 'react'
 import ModalContainer from './ModalContainer'
+import BookItem from '../book/BookItem'
 
 interface Props {
   onClose: () => void
@@ -59,14 +60,9 @@ const AddBookModal = ({ onClose, handleSaleButton }: Props) => {
 
       {/* 도서 API 검색결과 */}
       <div className='grid grid-cols-[200px_200px_200px] gap-3 overflow-y-scroll'>
-        {data?.map((book, i) => (
-          <div key={i} className='w-[180px] text-center'>
-            <div className=' text-sm'>{book?.title}</div>
-            {book.thumbnail && (
-              <div className='flex justify-center my-4'>
-                <img src={book.thumbnail} alt={`${book.title} 표지`} />
-              </div>
-            )}
+        {data?.map((book) => (
+          <div key={book.id} className='border flex flex-col justify-between'>
+            <BookItem book={book} />
             <button className='bg-slate-300 p-2 text-sm' onClick={() => handleSaleButton(book)}>
               판매 등록
             </button>
