@@ -27,7 +27,7 @@ const BookForm = ({ onSubmit, book, text }: BookFormProps) => {
   }
 
   return (
-    <section className='flex flex-col gap-5 items-center'>
+    <section data-cy='book-upload-form' className='flex flex-col gap-5 items-center'>
       <h3>제목: {book?.title}</h3>
       <p>
         저자: {authors[0]} {authors.length > 1 && '그 외'}
@@ -36,6 +36,7 @@ const BookForm = ({ onSubmit, book, text }: BookFormProps) => {
       <form onSubmit={handleSubmit} className='w-[450px] flex flex-col gap-3'>
         <p>책 소개</p>
         <textarea
+          data-cy='book-description'
           className='w-full h-[280px] border-2 resize-none rounded-md p-2'
           name=''
           id=''
@@ -44,6 +45,7 @@ const BookForm = ({ onSubmit, book, text }: BookFormProps) => {
         />
 
         <input
+          data-cy='book-quantity'
           type='number'
           min='1'
           value={quantity}
@@ -55,7 +57,7 @@ const BookForm = ({ onSubmit, book, text }: BookFormProps) => {
           className='w-16 p-2 border rounded text-center'
           required
         />
-        <button>{text}</button>
+        <button data-cy='submit-button'>{text}</button>
       </form>
     </section>
   )

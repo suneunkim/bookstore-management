@@ -51,6 +51,7 @@ const AddBookModal = ({ onClose, handleSaleButton }: Props) => {
     <ModalContainer modal='add' onClick={onClose}>
       <div className='flex justify-center w-[60%] mx-auto'>
         <input
+          data-cy='search-book-input'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder='책 제목 검색하기'
@@ -59,11 +60,18 @@ const AddBookModal = ({ onClose, handleSaleButton }: Props) => {
       </div>
 
       {/* 도서 API 검색결과 */}
-      <div className='grid grid-cols-[200px_200px_200px] gap-3 overflow-y-scroll'>
+      <div
+        data-cy='search-results'
+        className='grid grid-cols-[200px_200px_200px] gap-3 overflow-y-scroll'
+      >
         {data?.map((book, i) => (
           <div key={i} className='border flex flex-col justify-between'>
             <BookItem book={book} />
-            <button className='bg-slate-300 p-2 text-sm' onClick={() => handleSaleButton(book)}>
+            <button
+              data-cy='sale-register-button'
+              className='bg-slate-300 p-2 text-sm'
+              onClick={() => handleSaleButton(book)}
+            >
               판매 등록
             </button>
           </div>

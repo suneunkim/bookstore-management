@@ -26,7 +26,9 @@ const BookAddSection = () => {
 
   return (
     <div>
-      <button onClick={openSearchModal}>책 추가하기</button>
+      <button data-cy='add-book-button' onClick={openSearchModal}>
+        책 추가하기
+      </button>
 
       {isSearchModalOpen && (
         <AddBookModal onClose={closeSearchModal} handleSaleButton={handleSaleButton} />
