@@ -46,7 +46,7 @@ const BookList = ({ books }: { books: BookData[] }) => {
         ))}
       </div>
       {books.length > 0 && (
-        <section className='flex gap-4 mt-4 justify-center'>
+        <section className='flex gap-4 mt-4 justify-center mb-10'>
           <button onClick={() => handlePageArrow('prev')} disabled={startPage === 1}>
             이전
           </button>

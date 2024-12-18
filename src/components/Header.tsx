@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 
@@ -20,11 +21,13 @@ const Header = () => {
   }
 
   return (
-    <div className='flex gap-10'>
-      <div>BookStore Management</div>
-      <form onSubmit={handleSearch} className='flex gap-4'>
-        <div>제목 검색</div>
+    <div className='flex justify-between gap-10'>
+      <Link href='/' className='bg-slate-900 text-white p-4 rounded-lg'>
+        BookStore Management
+      </Link>
+      <form onSubmit={handleSearch} className='flex gap-4 items-center'>
         <select
+          className='border rounded-md p-2'
           onChange={(e) => setSearchType(e.target.value as 'title' | 'author')}
           value={searchType}
         >
@@ -32,6 +35,7 @@ const Header = () => {
           <option value='author'>저자</option>
         </select>
         <input
+          className='p-2 border rounded-md'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder='검색어를 입력해주세요'

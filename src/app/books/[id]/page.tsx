@@ -1,3 +1,4 @@
+import Header from '@/components/Header'
 import DeleteBookButton from '@/components/home/book/DeleteBookButton'
 import { getBookById } from '@/lib/firebase/books'
 import Link from 'next/link'
@@ -13,10 +14,13 @@ const DetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <div>
       <section className='flex flex-col gap-5 items-center'>
-        <h3>제목: {book?.title}</h3>
-        <p>
-          저자: {book.authors[0]} {book.authors.length > 1 && '그 외'}
-        </p>
+        <Header />
+        <div className='flex gap-2'>
+          <h3>제목: {book?.title}</h3>
+          <p>
+            저자: {book.authors[0]} {book.authors.length > 1 && '그 외'}
+          </p>
+        </div>
         <img src={book?.thumbnail} alt={`${book?.title} 표지`} />
         <div className='w-[450px] flex flex-col gap-3'>
           <p>책 소개</p>

@@ -26,8 +26,12 @@ const BookAddSection = () => {
 
   return (
     <div>
-      <button onClick={openSearchModal}>책 추가하기</button>
-
+      <button
+        className='p-2 rounded-md bg-slate-800 text-white fixed bottom-10 right-10'
+        onClick={openSearchModal}
+      >
+        책 추가하기
+      </button>
       {isSearchModalOpen && (
         <AddBookModal onClose={closeSearchModal} handleSaleButton={handleSaleButton} />
       )}
