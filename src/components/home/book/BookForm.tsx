@@ -53,6 +53,7 @@ const BookForm = ({ onSubmit, book, text }: BookFormProps) => {
             setQuantity(isNaN(value) || value < 1 ? 1 : value)
           }}
           className='w-16 p-2 border rounded text-center'
+          required
         />
         <button>{text}</button>
       </form>
