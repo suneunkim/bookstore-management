@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import BookItem from './BookItem'
 import { BookData } from '@/type'
 import calculatePageRange from '@/utils/calculatePageRange'
+import Link from 'next/link'
 
 const BookList = ({ books }: { books: BookData[] }) => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -37,11 +38,11 @@ const BookList = ({ books }: { books: BookData[] }) => {
       <div className='grid grid-cols-[200px_200px] md:grid-cols-[200px_200px_200px] justify-center my-10 gap-10'>
         {books?.length === 0 && <div>아직 등록된 책이 없습니다.</div>}
         {paginatedBooks?.map((book) => (
-          <div key={book.id}>
+          <Link href={`/books/${book.id}`} key={book.id}>
             <BookItem book={book} />
             <div>저자 : {book.authors.join(', ')}</div>
             <div>수량 : {book.quantity}</div>
-          </div>
+          </Link>
         ))}
       </div>
       {books.length > 0 && (

@@ -2,16 +2,20 @@ import { BookData, FirestoreBookData } from '@/type'
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
+  getDoc,
   getDocs,
   orderBy,
   Query,
   query,
   serverTimestamp,
+  updateDoc,
   where,
 } from 'firebase/firestore'
 import { db } from './config'
 
-// 책 DB 등록, 조회, 수정, 삭제
+// 책 등록
 export const addBook = async (book: any) => {
   try {
     await addDoc(collection(db, 'books'), {
@@ -25,6 +29,7 @@ export const addBook = async (book: any) => {
   }
 }
 
+// 도서 조회
 export const getBooks = async (
   searchQuery?: string,
   searchType?: 'title' | 'author'
@@ -59,4 +64,55 @@ export const getBooks = async (
       thumbnail: data.thumbnail || '',
     }
   })
+}
+
+// 상세 조회
+export const getBookById = async (id: string) => {
+  try {
+    const docRef = doc(db, 'books', id)
+    const docSnapshot = await getDoc(docRef)
+
+    if (!docSnapshot.exists()) {
+      return null
+    }
+
+    const data = docSnapshot.data() as FirestoreBookData
+    return {
+      id: docSnapshot.id,
+      quantity: data.quantity,
+      authors: data.authors || [],
+      contents: data.contents || '',
+      title: data.title || '',
+      thumbnail: data.thumbnail || '',
+    }
+  } catch (error) {
+    console.error('Error fetching book', error)
+    return null
+  }
+}
+
+// 수정하기
+export const updateBook = async (id: string, data: { contents: string; quantity: number }) => {
+  try {
+    const bookRef = doc(db, 'books', id)
+    await updateDoc(bookRef, {
+      contents: data.contents,
+      quantity: data.quantity,
+    })
+    return { success: true }
+  } catch (error) {
+    console.error('Error updating book', error)
+    return { success: false }
+  }
+}
+
+export const deleteBook = async (id: string) => {
+  try {
+    const bookRef = doc(db, 'books', id)
+    await deleteDoc(bookRef)
+    return { success: true }
+  } catch (error) {
+    console.error('Error deleting book', error)
+    return { success: false }
+  }
 }

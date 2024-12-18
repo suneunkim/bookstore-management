@@ -1,9 +1,9 @@
 'use client'
 
-import { ApiBookData } from '@/type'
+import { ApiBookData, BookData, BookFormData } from '@/type'
 import ModalContainer from './ModalContainer'
-import { useEffect, useState } from 'react'
-import addBookAction from '@/app/actions'
+import { addBookAction } from '@/app/actions'
+import BookForm from '../book/BookForm'
 
 interface Props {
   onClose: () => void
@@ -11,17 +11,6 @@ interface Props {
 }
 
 const BookFormModal = ({ onClose, selectedBook }: Props) => {
-  const authors = selectedBook?.authors?.length ? selectedBook.authors : ['알 수 없음']
-  const [description, setDescription] = useState('')
-  const [quantity, setQuantity] = useState(1)
-
-  useEffect(() => {
-    if (selectedBook) {
-      setDescription(selectedBook?.contents)
-    }
-  }, [selectedBook])
-
-  // selectedBook이 없을 경우
   if (!selectedBook) {
     return (
       <ModalContainer modal='form' onClick={onClose}>
@@ -30,17 +19,16 @@ const BookFormModal = ({ onClose, selectedBook }: Props) => {
     )
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!selectedBook) return
-    const book: ApiBookData & { quantity: number } = {
-      title: selectedBook.title,
-      authors: authors,
-      contents: description,
-      thumbnail: selectedBook.thumbnail,
-      quantity: quantity,
-    }
+  const handleSubmit = async (formData: BookFormData) => {
     try {
+      const book: BookData = {
+        title: selectedBook.title,
+        thumbnail: selectedBook.thumbnail,
+        authors: formData.authors,
+        contents: formData.description,
+        quantity: formData.quantity,
+      }
+
       const result = await addBookAction(book)
 
       if (result.success) {
@@ -57,36 +45,7 @@ const BookFormModal = ({ onClose, selectedBook }: Props) => {
 
   return (
     <ModalContainer modal='form' onClick={onClose}>
-      <section className='flex flex-col gap-5 items-center'>
-        <h3>제목: {selectedBook?.title}</h3>
-        <p>
-          저자: {authors[0]} {authors.length > 1 && '그 외'}
-        </p>
-        <img src={selectedBook?.thumbnail} alt={`${selectedBook?.title} 표지`} />
-        <form onSubmit={handleSubmit} className='w-[450px] flex flex-col gap-3'>
-          <p>책 소개</p>
-          <textarea
-            className='w-full h-[280px] border-2 resize-none rounded-md p-2'
-            name=''
-            id=''
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-
-          <input
-            type='number'
-            min='1'
-            value={quantity}
-            onChange={(e) => {
-              const value = parseInt(e.target.value)
-              // NaN 방지 및 최소값 1 보장
-              setQuantity(isNaN(value) || value < 1 ? 1 : value)
-            }}
-            className='w-16 p-2 border rounded text-center'
-          />
-          <button>등록하기</button>
-        </form>
-      </section>
+      <BookForm onSubmit={handleSubmit} book={selectedBook} text='등록하기' />
     </ModalContainer>
   )
 }
