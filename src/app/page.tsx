@@ -1,10 +1,17 @@
 import BookAddSection from '@/components/home/BookAddSection'
 import Header from '@/components/Header'
 import BookList from '@/components/home/book/BookList'
-import { getBooks } from '@/firebase'
+import { getBooks } from '@/lib/firebase/books'
 
-const page = async () => {
-  const books = await getBooks()
+interface Props {
+  query?: string
+  type?: 'title' | 'author'
+}
+
+const page = async ({ searchParams }: { searchParams: Props }) => {
+  const { type, query } = await searchParams
+
+  const books = await getBooks(query, type as 'title' | 'author')
 
   return (
     <div className='flex justify-center'>

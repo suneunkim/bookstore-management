@@ -1,6 +1,6 @@
 'use server'
 
-import { addBook } from '@/firebase'
+import { addBook } from '@/lib/firebase/books'
 import { BookData } from '@/type'
 import { revalidatePath } from 'next/cache'
 

@@ -7,7 +7,7 @@ import calculatePageRange from '@/utils/calculatePageRange'
 
 const BookList = ({ books }: { books: BookData[] }) => {
   const [currentPage, setCurrentPage] = useState(1)
-  const pageSize = 1
+  const pageSize = 10
   const totalPages = Math.ceil(books.length / pageSize)
   const PAGES_PER_VIEW = 5 // 페이지네이션으로 보여줄 번호 개수
 
@@ -34,7 +34,7 @@ const BookList = ({ books }: { books: BookData[] }) => {
 
   return (
     <div>
-      <div className='grid grid-cols-[200px_200px] justify-center my-10 gap-10'>
+      <div className='grid grid-cols-[200px_200px] md:grid-cols-[200px_200px_200px] justify-center my-10 gap-10'>
         {books?.length === 0 && <div>아직 등록된 책이 없습니다.</div>}
         {paginatedBooks?.map((book) => (
           <div key={book.id}>
