@@ -16,7 +16,7 @@ import {
 import { db } from './config'
 
 // 책 등록
-export const addBook = async (book: any) => {
+export const addBook = async (book: BookData) => {
   try {
     await addDoc(collection(db, 'books'), {
       ...book,

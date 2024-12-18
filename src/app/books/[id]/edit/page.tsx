@@ -10,7 +10,7 @@ const EditPage = () => {
   const { id } = useParams<{ id: string }>()
   const [book, setBook] = useState<BookData | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -19,12 +19,13 @@ const EditPage = () => {
       try {
         const fetchedBook = await getBookById(id)
         if (!fetchedBook) {
-          setError('책을 찾을 수 없습니다')
+          setErrorMessage('책을 찾을 수 없습니다')
           return
         }
         setBook(fetchedBook)
       } catch (error) {
-        setError('책 정보를 불러오는데 실패했습니다.')
+        console.error(error)
+        setErrorMessage('책 정보를 불러오는데 실패했습니다.')
       } finally {
         setIsLoading(false)
       }
@@ -55,8 +56,8 @@ const EditPage = () => {
   return (
     <div className='flex flex-col items-center justify-center gap-6'>
       {isLoading && <div>로딩 중...</div>}
-      {error && <div>{error}</div>}
-      {!isLoading && !error && book && (
+      {errorMessage && <div>{errorMessage}</div>}
+      {!isLoading && !errorMessage && book && (
         <>
           <h4>등록한 책 수정하기</h4>
           <BookForm onSubmit={handleSubmit} book={book} text='수정하기' />

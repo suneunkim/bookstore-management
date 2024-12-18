@@ -8,10 +8,10 @@ interface Props {
   type?: 'title' | 'author'
 }
 
-const page = async ({ searchParams }: { searchParams: Props }) => {
+const page = async ({ searchParams }: { searchParams: Promise<Props> }) => {
   const { type, query } = await searchParams
 
-  const books = await getBooks(query, type as 'title' | 'author')
+  const books = await getBooks(query, type)
 
   return (
     <div className='flex justify-center'>
