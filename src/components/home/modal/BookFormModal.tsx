@@ -2,7 +2,7 @@
 
 import { ApiBookData, BookData, BookFormData } from '@/type'
 import ModalContainer from './ModalContainer'
-import addBookAction from '@/app/actions'
+import { addBookAction } from '@/app/actions'
 import BookForm from '../book/BookForm'
 
 interface Props {

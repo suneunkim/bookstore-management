@@ -2,6 +2,7 @@ import { BookData, FirestoreBookData } from '@/type'
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -101,6 +102,17 @@ export const updateBook = async (id: string, data: { contents: string; quantity:
     return { success: true }
   } catch (error) {
     console.error('Error updating book', error)
+    return { success: false }
+  }
+}
+
+export const deleteBook = async (id: string) => {
+  try {
+    const bookRef = doc(db, 'books', id)
+    await deleteDoc(bookRef)
+    return { success: true }
+  } catch (error) {
+    console.error('Error deleting book', error)
     return { success: false }
   }
 }

@@ -1,3 +1,4 @@
+import DeleteBookButton from '@/components/home/book/DeleteBookButton'
 import { getBookById } from '@/lib/firebase/books'
 import Link from 'next/link'
 
@@ -32,7 +33,7 @@ const DetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         >
           수정하기
         </Link>
-        <button>삭제하기</button>
+        <DeleteBookButton />
       </div>
     </div>
   )
