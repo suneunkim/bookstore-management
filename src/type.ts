@@ -14,3 +14,10 @@ export interface BookData extends ApiBookData {
 export interface FirestoreBookData extends BookData {
   [key: string]: any
 }
+
+// 책 등록과 수정 시 변경 가능한 데이터
+export interface BookFormData {
+  description: string
+  quantity: number
+  authors: string[]
+}

@@ -2,6 +2,8 @@ import { BookData, FirestoreBookData } from '@/type'
 import {
   addDoc,
   collection,
+  doc,
+  getDoc,
   getDocs,
   orderBy,
   Query,
@@ -59,4 +61,28 @@ export const getBooks = async (
       thumbnail: data.thumbnail || '',
     }
   })
+}
+
+export const getBookById = async (id: string) => {
+  try {
+    const docRef = doc(db, 'books', id)
+    const docSnapshot = await getDoc(docRef)
+
+    if (!docSnapshot.exists()) {
+      return null
+    }
+
+    const data = docSnapshot.data() as FirestoreBookData
+    return {
+      id: docSnapshot.id,
+      quantity: data.quantity,
+      authors: data.authors || [],
+      contents: data.contents || '',
+      title: data.title || '',
+      thumbnail: data.thumbnail || '',
+    }
+  } catch (error) {
+    console.error('Error fetching book', error)
+    return null
+  }
 }
